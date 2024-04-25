@@ -1,4 +1,3 @@
 pytest
-appium == 1.4.16
 Appium-Python-Client
 airtest
