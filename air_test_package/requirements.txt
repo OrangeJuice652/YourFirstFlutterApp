@@ -1,4 +1,3 @@
-py
 pytest
 selenium
 Appium-Python-Client
