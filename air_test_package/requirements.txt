@@ -2,3 +2,4 @@ pytest
 selenium
 Appium-Python-Client
 airtest
+urllib3==1.26.6
