@@ -7,7 +7,8 @@ PKG = os.environ['APP_PACKAGE']
 LOG_DIR = os.environ['LOG_DIR']
 ADB_PATH = os.environ['ADB_PATH']
 SERIAL_NO = os.environ['SERIAL_NO']
-auto_setup(f'Android:///{SERIAL_NO}?adb_path={ADB_PATH}')
+print(f'Android:///{SERIAL_NO}?adb_path={ADB_PATH}')
+auto_setup(devices=[f'Android:///{SERIAL_NO}?adb_path={ADB_PATH}'])
 
 if PKG not in device().list_app():
     install(CWD + "/" + os.environ['APP_PATH'])
