@@ -18,7 +18,7 @@ try:
     # 画面左上のアイコンの確認
     assert_exists(
         Template(
-            filename=r"tests/statics/home_icon.png",
+            filename=r"tests/statics/home_ico.png",
             target_pos=1,
         )
     )
