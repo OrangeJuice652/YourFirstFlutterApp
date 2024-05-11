@@ -15,18 +15,19 @@ if PKG not in device().list_app():
 start_app(PKG)
 
 try:
+    resolution = device().get_current_resolution()
     # 画面左上のアイコンの確認
     assert_exists(
         Template(
             filename=r"tests/statics/home_icon.png",
-            target_pos=1,
+            resolution=resolution,
         )
     )
 
     assert_exists(
         Template(
             filename=r"tests/statics/heart_icon.png",
-            target_pos=1,
+            resolution=resolution,
         )
     )
 
@@ -34,14 +35,14 @@ try:
     assert_exists(
         Template(
             filename=r"tests/statics/like_button.png",
-            target_pos=5,
+            resolution=resolution,
         )
     )
 
     assert_exists(
         Template(
             filename=r"tests/statics/next_button.png",
-            target_pos=5,
+            resolution=resolution,
         )
     )
 finally:
