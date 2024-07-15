@@ -1,0 +1,48 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - export PYTHON_VERSION=3
+      - cd $DEVICEFARM_TEST_PACKAGE_PATH
+      # air_test_package/pythonを、/tmpに移動
+      - cp -r ./python /tmp
+      - export LD_LIBRARY_PATH=$DEVICEFARM_TEST_PACKAGE_PATH/ssl:/usr/local/lib:/usr/lib
+      - export PATH="/tmp/python/bin:$PATH"
+      - pip install --upgrade pip
+      - pip install -r requirements.txt
+
+  pre_test:
+    commands:
+      - cd $DEVICEFARM_TEST_PACKAGE_PATH
+      - export PYTHONHOME=/tmp/python
+      - export PYTHONVER=3.9
+      - export ADBPATH=${PYTHONHOME}/lib/python${PYTHONVER}/site-packages/airtest/core/android/static/adb/linux/adb
+      - export SNIPPETPATH=${PYTHONHOME}/lib/python${PYTHONVER}/site-packages/airtest/utils/snippet.py
+      # - echo "adb setup start"
+      # - rm $ADBPATH
+      # - adb_path=$(which adb)
+      # - cp $adb_path $ADBPATH
+      # - sed -i -e s#^\$ADB#$adb_path.orig#g $ADBPATH
+      #   - echo "Comment out python bugfix code by Airtest"
+      # - sed -ie "80,81 s/^/#/" $SNIPPETPATH
+      - echo "Pre Test. OK"
+
+  test:
+    commands:
+      - echo "Test Start"
+      - export APP_PACKAGE='com.example.flutter_application'
+      - export LOG_DIR=$DEVICEFARM_LOG_DIR
+      # https://hackerslab.aktsk.jp/2023/12/10/070000#%E3%83%87%E3%83%90%E3%82%A4%E3%82%B9%E5%88%9D%E6%9C%9F%E5%8C%96%E6%99%82%E3%81%AE-uri-%E3%82%92%E6%AD%A3%E7%A2%BA%E3%81%AB%E6%9B%B8%E3%81%8F
+      - export ADB_PATH=$(which adb)
+      - echo $ADB_PATH
+      - export SERIAL_NO=$(adb devices | awk 'NR==2{print $1}')
+      - python3 tests/test_main.py
+      - echo "Test Done"
+
+  post_test:
+    commands:
+      - echo "Post Test. OK"
+
+artifacts:
+  - $DEVICEFARM_LOG_DIR
